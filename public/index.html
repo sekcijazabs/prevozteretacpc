@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0a1628">
+<title>ЦПЦ Обука — Категорија Ц</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<!-- Screen capture protection overlay (aktivira se na PrintScreen) -->
+<div id="capture-protection" class="capture-protection-overlay"></div>
+
+<!-- Watermark with user email - sprečava lako deljenje screenshotova -->
+<div id="watermark-layer" class="watermark-layer"></div>
+
+<!-- ========== LOGIN ========== -->
+<section id="screen-login" class="screen">
+  <div class="login-container">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 64 64" width="48" height="48" aria-hidden="true">
+          <rect x="6" y="20" width="38" height="22" rx="2" fill="currentColor"/>
+          <rect x="44" y="26" width="14" height="16" rx="2" fill="currentColor"/>
+          <circle cx="18" cy="46" r="5" fill="currentColor"/>
+          <circle cx="48" cy="46" r="5" fill="currentColor"/>
+          <rect x="50" y="29" width="6" height="6" fill="#0a1628"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="brand-title">ЦПЦ ОБУКА</h1>
+        <p class="brand-subtitle">Категорија Ц — Превоз терета</p>
+      </div>
+    </div>
+
+    <!-- TAB SWITCHER -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Пријава</button>
+      <button class="auth-tab" data-tab="signup">Регистрација</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <form id="login-form" class="login-form auth-form">
+      <h2>Пријавите се</h2>
+      <p class="login-hint">Унесите имејл и лозинку које сте регистровали.</p>
+      
+      <label class="field">
+        <span>Имејл</span>
+        <input type="email" name="email" required autocomplete="email" placeholder="vase.ime@primer.rs">
+      </label>
+      
+      <label class="field">
+        <span>Лозинка</span>
+        <input type="password" name="password" required autocomplete="current-password" placeholder="••••••••">
+      </label>
+      
+      <button type="submit" class="btn btn-primary btn-block">
+        <span>Пријави се</span>
+      </button>
+      
+      <p id="login-error" class="error-msg" hidden></p>
+    </form>
+
+    <!-- SIGNUP FORM -->
+    <form id="signup-form" class="login-form auth-form" hidden>
+      <h2>Захтев за приступ</h2>
+      <p class="login-hint">Попуните податке па ћете добити одобрење од инструктора.</p>
+      
+      <label class="field">
+        <span>Име и презиме *</span>
+        <input type="text" name="name" required minlength="3" placeholder="Петар Петровић">
+      </label>
+      
+      <label class="field">
+        <span>Имејл *</span>
+        <input type="email" name="email" required autocomplete="email" placeholder="vase.ime@primer.rs">
+      </label>
+      
+      <label class="field">
+        <span>Број мобилног телефона *</span>
+        <input type="tel" name="phone" required placeholder="06X XXX XXXX">
+      </label>
+      
+      <label class="field">
+        <span>Изаберите лозинку * (мин. 6 знакова)</span>
+        <input type="password" name="password" required minlength="6" autocomplete="new-password">
+      </label>
+      
+      <label class="field">
+        <span>Напомена (опционо)</span>
+        <textarea name="note" rows="2" placeholder="нпр. возачка лиценца, ауто-школа..."></textarea>
+      </label>
+      
+      <button type="submit" class="btn btn-primary btn-block">
+        <span>Пошаљи захтев</span>
+      </button>
+      
+      <p id="signup-error" class="error-msg" hidden></p>
+      <p id="signup-success" class="success-msg" hidden></p>
+    </form>
+
+    <p class="login-footer">
+      Овај налог може се користити <strong>само на једном уређају</strong>.
+      Ако промените уређај, тражите од администратора ресет.
+    </p>
+  </div>
+</section>
+
+<!-- ========== HOME (MENU) ========== -->
+<section id="screen-home" class="screen" hidden>
+  <header class="app-header">
+    <div class="app-header-inner">
+      <div class="app-brand">
+        <span class="app-brand-mark">CPC</span>
+        <span class="app-brand-text">Обука Ц</span>
+      </div>
+      <div class="app-user">
+        <span id="user-name" class="user-name"></span>
+        <button id="btn-logout" class="btn btn-ghost btn-sm">Одјава</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <div class="welcome">
+      <h1>Добродошли, <span id="welcome-name">полазниче</span>!</h1>
+      <p class="welcome-sub">Изаберите режим рада</p>
+    </div>
+
+    <div class="stats-row" id="stats-row">
+      <div class="stat-card">
+        <div class="stat-value" id="stat-attempts">0</div>
+        <div class="stat-label">Покушаја</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-accuracy">—</div>
+        <div class="stat-label">Успешност</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-mistakes">0</div>
+        <div class="stat-label">Грешака</div>
+      </div>
+    </div>
+
+    <div class="mode-cards">
+      <button class="mode-card" data-mode="practice">
+        <div class="mode-icon">📚</div>
+        <div class="mode-content">
+          <h3>Вежба по областима</h3>
+          <p>Изабери област или вежбај све насумично</p>
+        </div>
+        <div class="mode-badge" id="total-count">— пит.</div>
+      </button>
+
+      <button class="mode-card" data-mode="exam">
+        <div class="mode-icon">📝</div>
+        <div class="mode-content">
+          <h3>Симулација испита</h3>
+          <p>30 насумичних питања · пролазност 75%</p>
+        </div>
+        <div class="mode-badge">30 пит.</div>
+      </button>
+
+      <button class="mode-card" data-mode="mistakes">
+        <div class="mode-icon">🔁</div>
+        <div class="mode-content">
+          <h3>Понови грешке</h3>
+          <p>Питања на којима си грешио/ла</p>
+        </div>
+        <div class="mode-badge" id="mistakes-count">0 пит.</div>
+      </button>
+
+      <button class="mode-card" data-mode="progress">
+        <div class="mode-icon">📊</div>
+        <div class="mode-content">
+          <h3>Мој напредак</h3>
+          <p>Статистика по областима</p>
+        </div>
+        <div class="mode-badge">→</div>
+      </button>
+    </div>
+  </main>
+</section>
+
+<!-- ========== THEME PICKER ========== -->
+<section id="screen-themes" class="screen" hidden>
+  <header class="app-header">
+    <div class="app-header-inner">
+      <button class="btn-back" data-back="home">← Назад</button>
+      <h2>Изаберите област</h2>
+      <div></div>
+    </div>
+  </header>
+  <main class="app-main">
+    <div class="theme-list" id="theme-list"></div>
+  </main>
+</section>
+
+<!-- ========== QUIZ ========== -->
+<section id="screen-quiz" class="screen" hidden>
+  <header class="app-header">
+    <div class="app-header-inner">
+      <button class="btn-back" id="quiz-back">← Прекини</button>
+      <div class="quiz-progress">
+        <span id="quiz-index">1</span> / <span id="quiz-total">10</span>
+      </div>
+      <div class="quiz-mode" id="quiz-mode-label"></div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  </header>
+
+  <main class="app-main quiz-main">
+    <div class="quiz-card" id="quiz-card">
+      <div class="quiz-theme" id="quiz-theme"></div>
+      <h2 class="quiz-question" id="quiz-question"></h2>
+      <img id="quiz-image" class="quiz-image" hidden alt="Питање са сликом">
+      <div class="quiz-options" id="quiz-options"></div>
+      
+      <div class="quiz-explanation" id="quiz-explanation" hidden>
+        <div class="explanation-header">
+          <span class="explanation-icon">💡</span>
+          <span class="explanation-title">Образложење</span>
+        </div>
+        <p id="explanation-text"></p>
+        <button class="btn btn-primary btn-block" id="btn-next">Следеће питање →</button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ========== RESULT ========== -->
+<section id="screen-result" class="screen" hidden>
+  <main class="app-main result-main">
+    <div class="result-card" id="result-card">
+      <div class="result-emoji" id="result-emoji">🎉</div>
+      <h1 class="result-title" id="result-title">Браво!</h1>
+      <div class="result-score">
+        <div class="result-score-big" id="result-score">0 / 0</div>
+        <div class="result-score-pct" id="result-pct">0%</div>
+      </div>
+      <p class="result-message" id="result-message"></p>
+      <div class="result-actions">
+        <button class="btn btn-primary" id="result-home">На почетну</button>
+        <button class="btn btn-ghost" id="result-again">Понови</button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ========== PROGRESS ========== -->
+<section id="screen-progress" class="screen" hidden>
+  <header class="app-header">
+    <div class="app-header-inner">
+      <button class="btn-back" data-back="home">← Назад</button>
+      <h2>Мој напредак</h2>
+      <div></div>
+    </div>
+  </header>
+  <main class="app-main">
+    <div class="progress-overview" id="progress-overview"></div>
+    <h3 class="section-title">Успешност по областима</h3>
+    <div class="theme-progress-list" id="theme-progress-list"></div>
+    <h3 class="section-title">Топ грешке</h3>
+    <div class="mistakes-list" id="mistakes-list"></div>
+  </main>
+</section>
+
+<!-- Toast notifications -->
+<div id="toast" class="toast" hidden></div>
+
+<script src="/app.js"></script>
+</body>
+</html>
