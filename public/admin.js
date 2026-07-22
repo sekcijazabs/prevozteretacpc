@@ -23,8 +23,8 @@ const $ = sel => document.querySelector(sel);
 const $$ = sel => document.querySelectorAll(sel);
 
 function escapeHtml(s) {
-  return String(s ?? '').replace(/[&<>"']/g, c => ({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  return String(s ?? '').replace(/[&<>\"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'
   }[c]));
 }
 
@@ -59,9 +59,6 @@ function fmtDateOnly(s) {
 // ============================================================
 
 async function tryLogin() {
-  // FIX: sakrij modal pre provere
-  const _mo = document.getElementById('modal');
-  if (_mo) _mo.hidden = true;
   try {
     await API.get('/api/admin/check');
     enterAdmin();
@@ -72,9 +69,13 @@ async function tryLogin() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // FIX: sakrij modal odmah
-  const _m = document.getElementById('modal');
-  if (_m) _m.hidden = true;
+  // Ensure modal is hidden on page load
+  const modal = document.getElementById('modal');
+  if (modal) {
+    modal.hidden = true;
+    modal.style.display = '';
+  }
+
   $('#admin-login-form').addEventListener('submit', async e => {
     e.preventDefault();
     const fd = new FormData(e.target);
@@ -391,12 +392,18 @@ function openModal(title, bodyHtml) {
   const m = document.getElementById('modal');
   document.getElementById('modal-title').textContent = title;
   document.getElementById('modal-body').innerHTML = bodyHtml;
-  if (m) { m.hidden = false; m.style.display = ''; }
+  if (m) { 
+    m.hidden = false; 
+    m.style.display = '';
+  }
 }
 
 function closeModal() {
   const m = document.getElementById('modal');
-  if (m) { m.hidden = true; m.style.display = ''; }
+  if (m) { 
+    m.hidden = true; 
+    m.style.display = 'none';
+  }
 }
 
 function openExtendModal(id, currentDate) {
@@ -471,3 +478,4 @@ async function loadHardest() {
     });
   } catch(e) { console.error(e); }
 }
+
