@@ -227,7 +227,16 @@ function authAdmin(req, res, next) {
 
 app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
-  if (!email || !password) return res.status(400).json({ error: 'Email i lozinka obavezni' });
+  
+  // Validate email is a non-empty string
+  if (!email || typeof email !== 'string' || !email.trim()) {
+    return res.status(400).json({ error: 'Email je obavezan' });
+  }
+  
+  // Validate password is a non-empty string
+  if (!password || typeof password !== 'string' || !password.trim()) {
+    return res.status(400).json({ error: 'Lozinka je obavezna' });
+  }
 
   const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email.trim().toLowerCase());
   if (!user) return res.status(401).json({ error: 'Pogrešan email ili lozinka' });
