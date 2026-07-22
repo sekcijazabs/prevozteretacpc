@@ -49,7 +49,7 @@ function initProtection() {
 
   // Block common copy / dev tools shortcuts
   document.addEventListener('keydown', e => {
-    const k = e.key.toLowerCase();
+    const k = (e.key || '').toLowerCase();
     const ctrl = e.ctrlKey || e.metaKey;
     
     // F12, Ctrl+Shift+I/J/C, Ctrl+U
