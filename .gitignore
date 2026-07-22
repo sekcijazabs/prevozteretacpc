@@ -1,0 +1,8 @@
+node_modules/
+.env
+data/cpc.db
+data/cpc.db-journal
+data/cpc.db-wal
+data/cpc.db-shm
+.DS_Store
+*.log

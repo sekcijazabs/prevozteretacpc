@@ -1,0 +1,23 @@
+{
+  "name": "cpc-kurs-c",
+  "version": "1.0.0",
+  "description": "CPC Obuka - Kategorija C (prevoz tereta)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "import-questions": "node scripts/import-questions.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "better-sqlite3": "^11.3.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.3",
+    "ua-parser-js": "^1.0.35",
+    "adm-zip": "^0.5.10"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

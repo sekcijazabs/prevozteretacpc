@@ -1,0 +1,23 @@
+modules = ["nodejs-20"]
+run = "npm start"
+entrypoint = "server.js"
+hidden = [".config", "package-lock.json"]
+
+[nix]
+channel = "stable-24_05"
+
+[unitTest]
+language = "nodejs"
+
+[deployment]
+run = ["sh", "-c", "npm start"]
+deploymentTarget = "autoscale"
+ignorePorts = false
+build = ["sh", "-c", "npm install"]
+
+[[ports]]
+localPort = 3000
+externalPort = 80
+
+[env]
+NODE_ENV = "production"
